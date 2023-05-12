@@ -10,8 +10,29 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+model User {
+    id            String @id @default(cuid())
+    minutesWorked Float
+    totalEarned   Float
+}
+
 model Post {
     id      String @id @default(cuid())
     title   String
     content String
+}
+
+model Transaction {
+    id          String   @id @default(cuid())
+    totalEarned Float
+    starttime   DateTime
+    endtime     DateTime
+    trip        Trip[]
+}
+
+model Trip {
+    id            String       @id @default(cuid())
+    earned        Float
+    Transaction   Transaction? @relation(fields: [transactionId], references: [id])
+    transactionId String?
 }

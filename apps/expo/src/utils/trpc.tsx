@@ -51,7 +51,7 @@ export const TRPCProvider: React.FC<{
           url: `${getBaseUrl()}/api/trpc`,
         }),
       ],
-    }),
+    })
   );
 
   return (
