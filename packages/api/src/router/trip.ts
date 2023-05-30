@@ -6,6 +6,13 @@ export const tripRouter = router({
     return ctx.prisma.post.findMany();
   }),
 
+  data: publicProcedure.query(async ({ ctx }) => {
+    const users = await ctx.prisma.user.findMany();
+
+    const user = users[0];
+
+    return user;
+  }),
   test: publicProcedure.query(({}) => {
     return 252;
   }),
@@ -25,12 +32,4 @@ export const tripRouter = router({
 
     return total;
   }),
-  byId: publicProcedure.input(z.string()).query(({ ctx, input }) => {
-    return ctx.prisma.post.findFirst({ where: { id: input } });
-  }),
-  create: protectedProcedure
-    .input(z.object({ title: z.string(), content: z.string() }))
-    .mutation(({ ctx, input }) => {
-      return ctx.prisma.post.create({ data: input });
-    }),
 });

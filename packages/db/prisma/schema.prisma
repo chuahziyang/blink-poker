@@ -11,9 +11,10 @@ datasource db {
 }
 
 model User {
-    id            String @id @default(cuid())
+    id            String  @id @default(cuid())
     minutesWorked Float
     totalEarned   Float
+    pending       Boolean @default(false)
 }
 
 model Post {

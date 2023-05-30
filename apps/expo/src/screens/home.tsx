@@ -18,9 +18,13 @@ import { SafeAreaView } from "react-native";
 import { trpc } from "../utils/trpc";
 
 export const HomeScreen: React.FC = () => {
-  const test = trpc.trip.test.useQuery();
-
+  const data = trpc.trip.data.useQuery();
   const test2 = trpc.trip.todayEarned.useQuery();
+
+  const clockIn = () => {
+    console.log("Clocked In");
+  };
+
   return (
     <SafeAreaView>
       <View className="flex h-24 w-full flex-row items-center justify-center bg-blue-200 pt-20">
@@ -33,20 +37,23 @@ export const HomeScreen: React.FC = () => {
         <View className="flex h-24 w-1/2 items-center justify-start bg-red-200">
           <View className="flex items-center">
             <Text>Total Earnings</Text>
-            <Text>${test.data}</Text>
+            <Text>${data.data ? data.data.totalEarned : "Loading..."}</Text>
           </View>
         </View>
       </View>
-      <View className="flex h-full w-full flex-row items-center justify-center rounded-lg border-2 bg-emerald-800 pt-60">
+      <View
+        className={`flex h-full w-full flex-row items-center justify-center rounded-lg border-2 pt-60 ${
+          data.data?.pending ? `bg-purple-800` : `bg-emerald-800`
+        }`}
+      >
         {/* <Text className="text-md mt-2 font-bold text-gray-400">
           Open up App.js to start working on your app!
         </Text> */}
         <View className=" bg-red-200 ">
-          <Pressable
-            className="bg-red-200"
-            onPress={() => console.log("Pressed!")}
-          >
-            <Text className="text-md mt-2 font-bold text-gray-400">asdasd</Text>
+          <Pressable className="bg-red-200" onPress={clockIn}>
+            <Text className="text-md mt-2 font-bold text-gray-400">
+              Clock In
+            </Text>
           </Pressable>
         </View>
       </View>
